@@ -49,7 +49,7 @@ fetch('/dataList')
 
 <template>
 <ul>
-  <li v-for="item in dataList" :key="item.id" {{ item.name }}</li>
+  <li v-for="item in dataList" :key="item.id">{{ item.name }}</li>
 </ul>
 </template>
 ```
