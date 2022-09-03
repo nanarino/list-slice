@@ -58,12 +58,6 @@ export function getitem<T>(arr: T[], indices: ConstructorParameters<typeof slice
 
 export function setitem<T>(arr: T[], indices: ConstructorParameters<typeof slice> | number, value: T | T[]): void {
   if (Array.isArray(indices)) {
-    let newItems: T[]
-    if (Array.isArray(value)) {
-      newItems = value
-    } else {
-      throw new TypeError(`must assign list to extended slice`)
-    }
     const __s = new slice(...indices)
     __s.step ||= 1
     let isReverse = (__s.step < 0)
@@ -83,7 +77,13 @@ export function setitem<T>(arr: T[], indices: ConstructorParameters<typeof slice
     for (let index = __s.start; Number(isReverse) ^ Number(index < __s.stop); index += __s.step) {
       __i.push(index)
     }
+    let newItems: T[]
     if (__s.step !== 1) {
+      if (Array.isArray(value)) {
+        newItems = value
+      } else {
+        throw new TypeError(`must assign list to extended slice`)
+      }
       if (newItems.length !== __i.length) {
         throw new RangeError(`attempt to assign sequence of size ${newItems.length} to extended slice of size ${__i.length}`)
       }
@@ -91,6 +91,11 @@ export function setitem<T>(arr: T[], indices: ConstructorParameters<typeof slice
         arr[__i[i]] = v
       }
     } else {
+      if (Array.isArray(value)) {
+        newItems = value
+      } else {
+        throw new TypeError(`can only assign a list`)
+      }
       arr.splice(__s.start, __i.length, ...newItems)
     }
   } else {
