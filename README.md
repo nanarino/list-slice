@@ -1,6 +1,6 @@
 # list-slice
 
-implementation of Python built-in type : `list.__getitem__` and `list.__setitem__`
+implementation of Python list sub : `list.__getitem__` and `list.__setitem__`
 
 
 ## Install
@@ -17,22 +17,34 @@ import { getitem, setitem } from "list-slice"
 
 ### getitem
 
-`getitem(arr, [start, stop, step])`
+- `getitem(arr, index)`
+- `getitem(arr, [stop])`
+- `getitem(arr, [start, stop])`
+- `getitem(arr, [start, stop, step])`
 
 ```js
-getitem([1, 2, 3, 4, 5], [2, null]) // [3, 4, 5]
-getitem([1, 2, 3, 4, 5], [3, null, -1]) // [4, 3, 2, 1]
+getitem([1, 2, 3, 4, 5], [2,,]) // [3, 4, 5]
+getitem([1, 2, 3, 4, 5], [3,,-1]) // [4, 3, 2, 1]
 ```
+
+python sub `arr[2]` is `list.__getitem__(arr, 2)`,other than `list.__getitem__(arr, slice(2))`.
+
+javascript `[2,,]` is different than `[2,]` or you can just use `[2, null]`.
+
+
 
 ### setitem
 
-`setitem(arr, [start, stop, step], newArr)`
+- `setitem(arr, index, newItem)`
+- `setitem(arr, [stop], newArr)`
+- `setitem(arr, [start, stop], newArr)`
+- `setitem(arr, [start, stop, step], newArr)`
 
 ```js
 const arr = [1, 3, 4, 5]
 setitem(arr, [], [7, 8, 9])
 console.log(arr) // [7, 8, 9]
-setitem(arr, [2, null], [7, 8, 9])
+setitem(arr, [2,,], [7, 8, 9])
 console.log(arr) // [7, 8, 7, 8, 9]
 ```
 
