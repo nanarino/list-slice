@@ -5,11 +5,10 @@ class slice {
   stop: number | null
   step: number | null
   constructor(...args: (number | null | undefined)[]) {
-    this.start = null
-    this.stop = null
-    this.step = null
     if (args.length === 1) {
+      this.start = null
       this.stop = args[0] ?? null
+      this.step = null
     } else {
       this.start = args[0] ?? null
       this.stop = args[1] ?? null
@@ -22,6 +21,9 @@ class slice {
 }
 
 export function getitem<T>(arr: T[], indices: ConstructorParameters<typeof slice> | number): T | T[] {
+  if (!Array.isArray(arr)) {
+    throw new TypeError(`the 'getitem' only apply to 'list' object`)
+  }
   if (Array.isArray(indices)) {
     const __s = new slice(...indices)
     __s.step ||= 1
@@ -39,7 +41,7 @@ export function getitem<T>(arr: T[], indices: ConstructorParameters<typeof slice
       __s.stop = max(0, min(isReverse ? (__s.stop + 1) : __s.stop, arr.length))
     }
     const items: T[] = []
-    for (let index = __s.start; Number(isReverse) ^ Number(index < __s.stop); index += __s.step) {
+    for (let index = __s.start; isReverse !== index < __s.stop; index += __s.step) {
       items.push(arr[index])
     }
     return items
@@ -57,6 +59,9 @@ export function getitem<T>(arr: T[], indices: ConstructorParameters<typeof slice
 }
 
 export function setitem<T>(arr: T[], indices: ConstructorParameters<typeof slice> | number, value: T | T[]): void {
+  if (!Array.isArray(arr)) {
+    throw new TypeError(`the 'setitem' only apply to 'list' object`)
+  }
   if (Array.isArray(indices)) {
     const __s = new slice(...indices)
     __s.step ||= 1
@@ -74,7 +79,7 @@ export function setitem<T>(arr: T[], indices: ConstructorParameters<typeof slice
       __s.stop = max(0, min(isReverse ? (__s.stop + 1) : __s.stop, arr.length))
     }
     const __i: number[] = []
-    for (let index = __s.start; Number(isReverse) ^ Number(index < __s.stop); index += __s.step) {
+    for (let index = __s.start; isReverse !== index < __s.stop; index += __s.step) {
       __i.push(index)
     }
     let newItems: T[]

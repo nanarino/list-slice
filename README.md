@@ -1,6 +1,6 @@
 # list-slice
 
-implementation of Python list sub : `list.__getitem__` and `list.__setitem__`
+> implementation of Python list sub : `list.__getitem__` and `list.__setitem__`
 
 
 ## Install
@@ -69,13 +69,15 @@ fetch('/dataList')
 
 ## Test
 
-Cover 100%
+Coverage 97%
 
 ```shell
 ----------|---------|----------|---------|---------|-------------------
 File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
 ----------|---------|----------|---------|---------|-------------------
-All files |     100 |      100 |     100 |     100 |
- index.ts |     100 |      100 |     100 |     100 |
+All files |   97.53 |    97.14 |     100 |   97.26 |
+ index.ts |   97.53 |    97.14 |     100 |   97.26 | 25,63
 ----------|---------|----------|---------|---------|-------------------
+Test Suites: 1 passed, 1 total
+Tests:       29 passed, 29 total
 ```
