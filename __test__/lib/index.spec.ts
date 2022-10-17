@@ -51,7 +51,7 @@ test('get slice [-1:1:0]', () => {
 
 // setitem
 const arr = [2, 3, 4, 5]
-const setItemAndBack = (slice: number | any[], newSlice: any) => {
+const setItemAndBack = (slice: number | (number | undefined)[], newSlice: number | number[]) => {
   setitem(arr, slice, newSlice)
   return arr
 }
@@ -83,10 +83,10 @@ test('set slice [-1:-1] = [...]', () => {
   expect(setItemAndBack([-1, -1], [1, 2, 3])).toEqual([1, 1, 2, 3, 9])
 })
 test('set slice [:] = val', () => {
-  expect(() => setItemAndBack([], '[]')).toThrow('can only assign a list')
+  expect(() => setItemAndBack([], 999)).toThrow('can only assign a list')
 })
 test('set slice [::-1] = val', () => {
-  expect(() => setItemAndBack([, , -1], '[]')).toThrow('must assign list to extended slice')
+  expect(() => setItemAndBack([, , -1], 999)).toThrow('must assign list to extended slice')
 })
 test('set slice [-500:500] = [...]', () => {
   expect(setItemAndBack([-500, 500], [0, 1, 2])).toEqual([0, 1, 2])
