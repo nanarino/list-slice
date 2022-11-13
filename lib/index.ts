@@ -1,6 +1,12 @@
 const { max, min } = Math
 
-class slice {
+export interface _slice {
+  start: number | null
+  stop: number | null
+  step: number | null
+}
+
+class slice implements _slice {
   start: number | null
   stop: number | null
   step: number | null
@@ -18,14 +24,17 @@ class slice {
       this.step = args[2] ?? null
     }
   }
+  static from(o: Partial<_slice>) {
+    return new slice(o.start, o.stop, o.step)
+  }
 }
 
-export function getitem<T>(arr: T[], indices: ConstructorParameters<typeof slice> | number): T | T[] {
+export function getitem<T>(arr: T[], indices: ConstructorParameters<typeof slice> | Partial<_slice> | number): T | T[] {
   if (!Array.isArray(arr)) {
     throw new TypeError(`the 'getitem' only apply to 'list' object`)
   }
-  if (Array.isArray(indices)) {
-    const __s = new slice(...indices)
+  if (typeof indices === "object") {
+    const __s = Array.isArray(indices) ? new slice(...indices) : slice.from(indices)
     __s.step ||= 1
     let isReverse = (__s.step < 0)
     if (__s.start === null) {
@@ -58,12 +67,12 @@ export function getitem<T>(arr: T[], indices: ConstructorParameters<typeof slice
   }
 }
 
-export function setitem<T>(arr: T[], indices: ConstructorParameters<typeof slice> | number, value: T | T[]): void {
+export function setitem<T>(arr: T[], indices: ConstructorParameters<typeof slice> | Partial<_slice> | number, value: T | T[]): void {
   if (!Array.isArray(arr)) {
     throw new TypeError(`the 'setitem' only apply to 'list' object`)
   }
-  if (Array.isArray(indices)) {
-    const __s = new slice(...indices)
+  if (typeof indices === "object") {
+    const __s = Array.isArray(indices) ? new slice(...indices) : slice.from(indices)
     __s.step ||= 1
     let isReverse = (__s.step < 0)
     if (__s.start === null) {
@@ -103,6 +112,7 @@ export function setitem<T>(arr: T[], indices: ConstructorParameters<typeof slice
       }
       arr.splice(__s.start, __i.length, ...newItems)
     }
+
   } else {
     if (!Number.isInteger(indices)) {
       throw new TypeError(`list indices must be integers or slices`)

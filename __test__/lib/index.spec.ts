@@ -1,4 +1,4 @@
-import { getitem, setitem } from "../../lib"
+import { getitem, setitem, _slice } from "../../lib"
 
 
 // getitem
@@ -16,6 +16,9 @@ test('get index ∉ range', () => {
 })
 test('get slice [::]', () => {
   expect(getitem([1, 2, 3, 4, 5], [null])).toEqual([1, 2, 3, 4, 5])
+})
+test('get slice [slice()]', () => {
+  expect(getitem([1, 2, 3, 4, 5], {})).toEqual([1, 2, 3, 4, 5])
 })
 test('get slice [::-1]', () => {
   expect(getitem([1, 2, 3, 4, 5], [, , -1])).toEqual([5, 4, 3, 2, 1])
@@ -38,6 +41,9 @@ test('get slice [:3:-1]', () => {
 test('get slice [-500:-1]', () => {
   expect(getitem([1, 2, 3, 4, 5], [-500, -1])).toEqual([1, 2, 3, 4])
 })
+test('get slice [slice(-500,-1)]', () => {
+  expect(getitem([1, 2, 3, 4, 5], { start: -500, stop: -1 })).toEqual([1, 2, 3, 4])
+})
 test('get slice [0:500]', () => {
   expect(getitem([1, 2, 3, 4, 5], [0, 500])).toEqual([1, 2, 3, 4, 5])
 })
@@ -51,7 +57,7 @@ test('get slice [-1:1:0]', () => {
 
 // setitem
 const arr = [2, 3, 4, 5]
-const setItemAndBack = (slice: number | (number | undefined)[], newSlice: number | number[]) => {
+const setItemAndBack = (slice: number | (number | undefined)[] | _slice, newSlice: number | number[]) => {
   setitem(arr, slice, newSlice)
   return arr
 }
@@ -96,4 +102,7 @@ test('set slice [::-1] = [...]', () => {
 })
 test('set slice [-1:-2:-1] = [...]', () => {
   expect(setItemAndBack([-1, -2, -1], [2])).toEqual([2, 1, 2])
+})
+test('set slice [slice()] = [...]', () => {
+  expect(setItemAndBack({start: null, stop: null, step: null}, [2])).toEqual([2])
 })

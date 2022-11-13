@@ -21,6 +21,7 @@ import { getitem, setitem } from "list-slice"
 - `getitem(arr, [stop])`
 - `getitem(arr, [start, stop])`
 - `getitem(arr, [start, stop, step])`
+- `getitem(arr, { start, stop, step })`
 
 ```js
 getitem([1, 2, 3, 4, 5], [2,,]) // [3, 4, 5]
@@ -39,6 +40,7 @@ javascript `[2,,]` is different than `[2,]` or you can just use `[2, null]`.
 - `setitem(arr, [stop], newArr)`
 - `setitem(arr, [start, stop], newArr)`
 - `setitem(arr, [start, stop, step], newArr)`
+- `setitem(arr, { start, stop, step }, newArr)`
 
 ```js
 const arr = [1, 3, 4, 5]
@@ -75,9 +77,10 @@ Coverage 97%
 ----------|---------|----------|---------|---------|-------------------
 File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
 ----------|---------|----------|---------|---------|-------------------
-All files |   97.53 |    97.14 |     100 |   97.26 |
- index.ts |   97.53 |    97.14 |     100 |   97.26 | 25,63
+All files |   97.56 |    97.29 |     100 |   97.29 |
+ index.ts |   97.56 |    97.29 |     100 |   97.29 | 34,72
 ----------|---------|----------|---------|---------|-------------------
 Test Suites: 1 passed, 1 total
-Tests:       29 passed, 29 total
+Tests:       32 passed, 32 total
+Snapshots:   0 total
 ```
