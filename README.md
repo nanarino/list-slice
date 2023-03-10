@@ -65,11 +65,11 @@ This is useful for changing vue `Reactive` list
 </script>
 
 <template>
-<ul>
-  <li v-for="item in dataList" :key="item.id">
-    {{ item.name }}
-  </li>
-</ul>
+  <ul>
+    <li v-for="item in dataList" :key="item.id">
+      {{ item.name }}
+    </li>
+  </ul>
 </template>
 ```
 
