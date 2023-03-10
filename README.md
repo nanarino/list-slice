@@ -24,14 +24,13 @@ import { getitem, setitem } from "list-slice"
 - `getitem(arr, { start, stop, step })`
 
 ```js
-getitem([1, 2, 3, 4, 5], [2,,]) // [3, 4, 5]
-getitem([1, 2, 3, 4, 5], [3,,-1]) // [4, 3, 2, 1]
+const arr = [1, 2, 3, 4, 5]
+// python arr[2:]
+getitem(arr, [2,,]) // [3, 4, 5]
+// python arr[3::-1]
+getitem(arr, [3,,-1]) // [4, 3, 2, 1]
 ```
-
-python sub `arr[2]` is `list.__getitem__(arr, 2)`,other than `list.__getitem__(arr, slice(2))`.
-
-javascript `[2,,]` is different than `[2,]` or you can just use `[2, null]`.
-
+`[2,,]` is different than `[2,]` or you can just use `[2, null]`.
 
 
 ### setitem
@@ -44,26 +43,32 @@ javascript `[2,,]` is different than `[2,]` or you can just use `[2, null]`.
 
 ```js
 const arr = [1, 3, 4, 5]
+
+// python arr[:] = [7, 8, 9]
 setitem(arr, [], [7, 8, 9])
 console.log(arr) // [7, 8, 9]
+
+// python arr[2:] = [7, 8, 9]
 setitem(arr, [2,,], [7, 8, 9])
 console.log(arr) // [7, 8, 7, 8, 9]
 ```
 
-This is useful for changing vue Reactive list
+This is useful for changing vue `Reactive` list
 
 ```vue
 <script setup>
-import { reactive } from "vue"
-const dataList = reactive([])
-fetch('/dataList')
-  .then(res => res.json())
-  .then(data => setitem(dataList, [], data))
+  import { reactive } from "vue"
+  const dataList = reactive([])
+  fetch('/dataList')
+    .then(res => res.json())
+    .then(data => setitem(dataList, [], data))
 </script>
 
 <template>
 <ul>
-  <li v-for="item in dataList" :key="item.id">{{ item.name }}</li>
+  <li v-for="item in dataList" :key="item.id">
+    {{ item.name }}
+  </li>
 </ul>
 </template>
 ```
@@ -71,16 +76,17 @@ fetch('/dataList')
 
 ## Test
 
-Coverage 97%
+Coverage 100%
 
 ```shell
 ----------|---------|----------|---------|---------|-------------------
 File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
 ----------|---------|----------|---------|---------|-------------------
-All files |   97.56 |    97.29 |     100 |   97.29 |
- index.ts |   97.56 |    97.29 |     100 |   97.29 | 34,72
+All files |     100 |      100 |     100 |     100 |
+ index.ts |     100 |      100 |     100 |     100 |
 ----------|---------|----------|---------|---------|-------------------
 Test Suites: 1 passed, 1 total
-Tests:       32 passed, 32 total
+Tests:       34 passed, 34 total
 Snapshots:   0 total
+Time:        1.579 s
 ```

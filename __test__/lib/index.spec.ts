@@ -1,7 +1,11 @@
 import { getitem, setitem, _slice } from "../../lib"
 
+const arrPerhapsrr: unknown = '2345'
 
 // getitem
+test('get slice apply not list', () => {
+  expect(() => getitem(arrPerhapsrr as number[], 0)).toThrow(`the 'getitem' only apply to 'list' object`)
+})
 test('get index ∉ int', () => {
   expect(() => getitem([1, 2, 3, 4, 5], NaN)).toThrow('list indices must be integers or slices')
 })
@@ -56,6 +60,9 @@ test('get slice [-1:1:0]', () => {
 
 
 // setitem
+test('set slice apply not list', () => {
+  expect(() => setitem(arrPerhapsrr as number[], 0, 1)).toThrow(`the 'setitem' only apply to 'list' object`)
+})
 const arr = [2, 3, 4, 5]
 const setItemAndBack = (slice: number | (number | undefined)[] | _slice, newSlice: number | number[]) => {
   setitem(arr, slice, newSlice)
@@ -104,5 +111,5 @@ test('set slice [-1:-2:-1] = [...]', () => {
   expect(setItemAndBack([-1, -2, -1], [2])).toEqual([2, 1, 2])
 })
 test('set slice [slice()] = [...]', () => {
-  expect(setItemAndBack({start: null, stop: null, step: null}, [2])).toEqual([2])
+  expect(setItemAndBack({ start: null, stop: null, step: null }, [2])).toEqual([2])
 })
