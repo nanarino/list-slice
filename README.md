@@ -58,6 +58,7 @@ This is useful for changing vue `Reactive` list
 ```vue
 <script setup>
   import { reactive } from "vue"
+  import { setitem } from "list-slice"
   const dataList = reactive([])
   fetch('/dataList')
     .then(res => res.json())
@@ -72,6 +73,15 @@ This is useful for changing vue `Reactive` list
   </ul>
 </template>
 ```
+
+## Bundler notes
+
+It was exported with `cjs`,`esm`,`iife` format and named exports.
+
+No export is transpiled for sake of modern syntax.
+
+It can only run on node14+ and modern browsers.
+
 
 
 ## Test

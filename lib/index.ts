@@ -102,7 +102,7 @@ export function setitem<T>(arr: T[], indices: ConstructorParameters<typeof slice
         throw new RangeError(`attempt to assign sequence of size ${newItems.length} to extended slice of size ${__i.length}`)
       }
       for (const [i, v] of Object.entries(newItems)) {
-        arr[__i[i]] = v
+        arr[__i[+i]] = v
       }
     } else {
       if (Array.isArray(value)) {
