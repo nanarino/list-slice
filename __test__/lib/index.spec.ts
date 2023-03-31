@@ -1,10 +1,10 @@
 import { getitem, setitem, slice } from "../../lib"
 
-const arrPerhapsrr: unknown = '2345'
+const arrPerhaps: unknown = '2345'
 
 // getitem
 test('get slice apply not list', () => {
-  expect(() => getitem(arrPerhapsrr as number[], 0)).toThrow(`the 'getitem' only apply to 'list' object`)
+  expect(() => getitem(arrPerhaps as number[], 0)).toThrow(`the 'getitem' only apply to 'list' object`)
 })
 test('get index ∉ int', () => {
   expect(() => getitem([1, 2, 3, 4, 5], NaN)).toThrow('list indices must be integers or slices')
@@ -61,7 +61,7 @@ test('get slice [-1:1:0]', () => {
 
 // setitem
 test('set slice apply not list', () => {
-  expect(() => setitem(arrPerhapsrr as number[], 0, 1)).toThrow(`the 'setitem' only apply to 'list' object`)
+  expect(() => setitem(arrPerhaps as number[], 0, 1)).toThrow(`the 'setitem' only apply to 'list' object`)
 })
 const arr = [2, 3, 4, 5]
 const setItemAndBack = (slice: number | (number | undefined)[] | slice, newSlice: number | number[]) => {
