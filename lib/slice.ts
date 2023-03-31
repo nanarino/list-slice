@@ -1,5 +1,6 @@
-import { SliceRangeError, SliceTypeError } from './error'
+import { SliceRangeError, SliceInitError, SliceIndexError, SliceValueError, SliceTypeError } from './error'
 import type { slice as _slice } from './types'
+import typeOf from 'just-typeof'
 const { max, min } = Math
 
 
@@ -16,7 +17,8 @@ class slice implements _slice {
       this.start = args[0] ?? null
       this.stop = args[1] ?? null
       if (args[2] === 0) {
-        throw new SliceRangeError(`slice step cannot be zero`)
+        // ValueError: slice step cannot be zero
+        throw new SliceInitError(`slice step cannot be zero`)
       }
       this.step = args[2] ?? null
     }
@@ -28,7 +30,8 @@ class slice implements _slice {
 
 function _getitem<T>(arr: T[], indices: ConstructorParameters<typeof slice> | Partial<_slice> | number): T | T[] {
   if (!Array.isArray(arr)) {
-    throw new SliceTypeError(`the 'getitem' only apply to 'list' object`)
+    // TypeError: descriptor '__getitem__' for 'list' objects doesn't apply to a '{*}' object
+    throw new SliceTypeError(`the 'getitem' for 'Array' objects doesn't apply to a '${typeOf(arr)}' object`)
   }
   if (typeof indices === "object") {
     const __s = Array.isArray(indices) ? new slice(...indices) : slice.from(indices)
@@ -53,12 +56,15 @@ function _getitem<T>(arr: T[], indices: ConstructorParameters<typeof slice> | Pa
     return items
   } else {
     if (!Number.isInteger(indices)) {
-      throw new SliceTypeError(`list indices must be integers or slices`)
+      const indicesType = typeOf(indices)
+      // TypeError: list indices must be integers or slices, not {*}
+      throw new SliceTypeError(`list indices must be integers or slices, not ${(indicesType === 'number') ? indices: indicesType}`)
     }
     let __i = indices
     if (__i < 0) __i += arr.length
     if (__i < 0 || __i >= arr.length) {
-      throw new SliceRangeError(`list index out of range`)
+      // IndexError: list index out of range
+      throw new SliceIndexError(`list index out of range`)
     }
     return arr[__i]
   }
@@ -79,7 +85,8 @@ export const getitem: (typeof _getitem) = (...args) => {
 
 function _setitem<T>(arr: T[], indices: ConstructorParameters<typeof slice> | Partial<_slice> | number, value: T | T[]): void {
   if (!Array.isArray(arr)) {
-    throw new SliceTypeError(`the 'setitem' only apply to 'list' object`)
+    // TypeError: descriptor '__setitem__' requires a 'list' object but received a '{*}'
+    throw new SliceTypeError(`the 'setitem' requires a 'Array' object but received a '${typeOf(arr)}'`)
   }
   if (typeof indices === "object") {
     const __s = Array.isArray(indices) ? new slice(...indices) : slice.from(indices)
@@ -106,10 +113,12 @@ function _setitem<T>(arr: T[], indices: ConstructorParameters<typeof slice> | Pa
       if (Array.isArray(value)) {
         newItems = value
       } else {
-        throw new SliceTypeError(`must assign list to extended slice`)
+        // TypeError: must assign iterable to extended slice
+        throw new SliceTypeError(`must assign Array to extended slice`)
       }
       if (newItems.length !== __i.length) {
-        throw new SliceRangeError(`attempt to assign sequence of size ${newItems.length} to extended slice of size ${__i.length}`)
+        // ValueError: attempt to assign sequence of size {*} to extended slice of size {*}
+        throw new SliceValueError(`attempt to assign sequence of size ${newItems.length} to extended slice of size ${__i.length}`)
       }
       for (const [i, v] of Object.entries(newItems)) {
         arr[__i[+i]] = v
@@ -118,6 +127,7 @@ function _setitem<T>(arr: T[], indices: ConstructorParameters<typeof slice> | Pa
       if (Array.isArray(value)) {
         newItems = value
       } else {
+        // TypeError: can only assign an iterable
         throw new SliceTypeError(`can only assign a list`)
       }
       arr.splice(__s.start, __i.length, ...newItems)
@@ -125,12 +135,15 @@ function _setitem<T>(arr: T[], indices: ConstructorParameters<typeof slice> | Pa
 
   } else {
     if (!Number.isInteger(indices)) {
-      throw new SliceTypeError(`list indices must be integers or slices`)
+      const indicesType = typeOf(indices)
+      // TypeError: list indices must be integers or slices, not {*}
+      throw new SliceTypeError(`list indices must be integers or slices, not ${(indicesType === 'number') ? indices: indicesType}`)
     }
     let __i = indices
     if (__i < 0) __i += arr.length
     if (__i < 0 || __i >= arr.length) {
-      throw new SliceRangeError(`list index out of range`)
+      // IndexError: list index out of range
+      throw new SliceIndexError(`list index out of range`)
     }
     arr[__i] = value as T
   }

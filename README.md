@@ -1,6 +1,6 @@
 # list-slice
 
-> implementation of Python list sub : `list.__getitem__` and `list.__setitem__`
+> inspired by Python list method : `list.__getitem__` and `list.__setitem__`
 
 
 ## Install
@@ -74,6 +74,24 @@ This is useful for changing vue `Reactive` list
 </template>
 ```
 
+## Handling Errors
+
+python-like error name:
+
+```js
+const a = getitem([1,2,3], 3)
+          ^
+
+SliceIndexError: list index out of range
+    at file:///c:/Users/Administrator/Desktop/test.mjs:3:11
+    at ModuleJob.run (internal/modules/esm/module_job.js:183:25)
+    at async Loader.import (internal/modules/esm/loader.js:178:24)
+    at async Object.loadESM (internal/process/esm_loader.js:68:5)
+    at async handleMainPromise (internal/modules/run_main.js:59:12)
+```
+
+
+
 ## Bundler notes
 
 It was exported with `cjs`,`esm`,`iife` format and named exports.
@@ -92,12 +110,13 @@ Coverage 100%
 ----------|---------|----------|---------|---------|-------------------
 File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
 ----------|---------|----------|---------|---------|-------------------
-All files |     100 |      100 |     100 |     100 | 
- error.ts |     100 |      100 |     100 |     100 | 
- index.ts |     100 |      100 |     100 |     100 | 
- slice.ts |     100 |      100 |     100 |     100 | 
+All files |     100 |      100 |     100 |     100 |
+ error.ts |     100 |      100 |     100 |     100 |
+ index.ts |     100 |      100 |     100 |     100 |
+ slice.ts |     100 |      100 |     100 |     100 |
 ----------|---------|----------|---------|---------|-------------------
 Test Suites: 1 passed, 1 total
-Tests:       34 passed, 34 total
+Tests:       36 passed, 36 total
 Snapshots:   0 total
+Time:        2.952 s, estimated 3 s
 ```

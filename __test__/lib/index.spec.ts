@@ -1,13 +1,17 @@
 import { getitem, setitem, slice } from "../../lib"
 
 const arrPerhaps: unknown = '2345'
+const intPerhaps: unknown = '1'
 
 // getitem
 test('get slice apply not list', () => {
-  expect(() => getitem(arrPerhaps as number[], 0)).toThrow(`the 'getitem' only apply to 'list' object`)
+  expect(() => getitem(arrPerhaps as number[], 0)).toThrow(`the 'getitem' for 'Array' objects doesn't apply to a 'string' object`)
 })
 test('get index ∉ int', () => {
-  expect(() => getitem([1, 2, 3, 4, 5], NaN)).toThrow('list indices must be integers or slices')
+  expect(() => getitem([1, 2, 3, 4, 5], NaN)).toThrow('list indices must be integers or slices, not NaN')
+})
+test('get index ∉ number', () => {
+  expect(() => getitem([1, 2, 3, 4, 5], intPerhaps as number)).toThrow('list indices must be integers or slices, not string')
 })
 test('get index 2', () => {
   expect(getitem([1, 2, 3, 4, 5], 2)).toBe(3)
@@ -61,7 +65,7 @@ test('get slice [-1:1:0]', () => {
 
 // setitem
 test('set slice apply not list', () => {
-  expect(() => setitem(arrPerhaps as number[], 0, 1)).toThrow(`the 'setitem' only apply to 'list' object`)
+  expect(() => setitem(arrPerhaps as number[], 0, 1)).toThrow(`the 'setitem' requires a 'Array' object but received a 'string'`)
 })
 const arr = [2, 3, 4, 5]
 const setItemAndBack = (slice: number | (number | undefined)[] | slice, newSlice: number | number[]) => {
@@ -69,7 +73,10 @@ const setItemAndBack = (slice: number | (number | undefined)[] | slice, newSlice
   return arr
 }
 test('set index ∉ int', () => {
-  expect(() => setItemAndBack(NaN, 1)).toThrow('list indices must be integers or slices')
+  expect(() => setItemAndBack(NaN, 1)).toThrow('list indices must be integers or slices, not NaN')
+})
+test('set index ∉ number', () => {
+  expect(() => setItemAndBack(intPerhaps as number, 1)).toThrow('list indices must be integers or slices, not string')
 })
 test('set index 0 = 1', () => {
   expect(setItemAndBack(0, 1)).toEqual([1, 3, 4, 5])
@@ -99,7 +106,7 @@ test('set slice [:] = val', () => {
   expect(() => setItemAndBack([], 999)).toThrow('can only assign a list')
 })
 test('set slice [::-1] = val', () => {
-  expect(() => setItemAndBack([, , -1], 999)).toThrow('must assign list to extended slice')
+  expect(() => setItemAndBack([, , -1], 999)).toThrow('must assign Array to extended slice')
 })
 test('set slice [-500:500] = [...]', () => {
   expect(setItemAndBack([-500, 500], [0, 1, 2])).toEqual([0, 1, 2])
