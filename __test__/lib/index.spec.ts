@@ -1,4 +1,4 @@
-import { getitem, setitem, _slice } from "../../lib"
+import { getitem, setitem, slice } from "../../lib"
 
 const arrPerhapsrr: unknown = '2345'
 
@@ -64,7 +64,7 @@ test('set slice apply not list', () => {
   expect(() => setitem(arrPerhapsrr as number[], 0, 1)).toThrow(`the 'setitem' only apply to 'list' object`)
 })
 const arr = [2, 3, 4, 5]
-const setItemAndBack = (slice: number | (number | undefined)[] | _slice, newSlice: number | number[]) => {
+const setItemAndBack = (slice: number | (number | undefined)[] | slice, newSlice: number | number[]) => {
   setitem(arr, slice, newSlice)
   return arr
 }
