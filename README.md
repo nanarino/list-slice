@@ -82,7 +82,7 @@ python-like error name:
 const a = getitem([1,2,3], 3)
           ^
 
-SliceIndexError: list index out of range
+SliceIndexError [RangeError]: list index out of range
     at file:///c:/Users/Administrator/Desktop/test.mjs:3:11
     at ModuleJob.run (internal/modules/esm/module_job.js:183:25)
     at async Loader.import (internal/modules/esm/loader.js:178:24)
@@ -107,16 +107,18 @@ It can only run on node14+ and modern browsers.
 Coverage 100%
 
 ```shell
-----------|---------|----------|---------|---------|-------------------
-File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
-----------|---------|----------|---------|---------|-------------------
-All files |     100 |      100 |     100 |     100 |
- error.ts |     100 |      100 |     100 |     100 |
- index.ts |     100 |      100 |     100 |     100 |
- slice.ts |     100 |      100 |     100 |     100 |
-----------|---------|----------|---------|---------|-------------------
+------------|---------|----------|---------|---------|-------------------
+File        | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
+------------|---------|----------|---------|---------|-------------------
+All files   |     100 |      100 |     100 |     100 |
+ error.ts   |     100 |      100 |     100 |     100 |
+ getitem.ts |     100 |      100 |     100 |     100 |
+ index.ts   |     100 |      100 |     100 |     100 |
+ setitem.ts |     100 |      100 |     100 |     100 |
+ slice.ts   |     100 |      100 |     100 |     100 |
+------------|---------|----------|---------|---------|-------------------
 Test Suites: 1 passed, 1 total
 Tests:       36 passed, 36 total
 Snapshots:   0 total
-Time:        2.952 s, estimated 3 s
+Time:        3.102 s
 ```
