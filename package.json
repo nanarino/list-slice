@@ -1,6 +1,6 @@
 {
   "name": "list-slice",
-  "version": "2.1.0",
+  "version": "2.2.1",
   "description": "inspired by Python list method : `list.__getitem__` and `list.__setitem__`",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -31,12 +31,12 @@
   },
   "devDependencies": {
     "@types/jest": "^28.1.8",
-    "@types/node": "^18.7.14",
+    "@types/node": "^18.17.12",
     "jest": "^28.1.3",
     "ts-jest": "^28.0.8",
     "ts-node": "^10.9.1",
-    "tsup": "^6.2.3",
-    "typescript": "^4.8.2"
+    "tsup": "^6.7.0",
+    "typescript": "^4.9.5"
   },
   "dependencies": {
     "just-typeof": "^3.2.0"
