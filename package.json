@@ -1,6 +1,6 @@
 {
   "name": "list-slice",
-  "version": "2.2.1",
+  "version": "2.3.0",
   "description": "inspired by Python list method : `list.__getitem__` and `list.__setitem__`",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

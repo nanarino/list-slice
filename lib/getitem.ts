@@ -36,13 +36,13 @@ function _getitem<T>(arr: T[], indices: ConstructorParameters<typeof slice> | Pa
     if (!Number.isInteger(indices)) {
       const indicesType = typeOf(indices)
       // TypeError: list indices must be integers or slices, not {*}
-      throw new SliceTypeError(`list indices must be integers or slices, not ${(indicesType === 'number') ? indices : indicesType}`)
+      throw new SliceTypeError(`array indices must be integers or slices, not ${(indicesType === 'number') ? indices : indicesType}`)
     }
     let __i = indices
     if (__i < 0) __i += arr.length
     if (__i < 0 || __i >= arr.length) {
       // IndexError: list index out of range
-      throw new SliceIndexError(`list index out of range`)
+      throw new SliceIndexError(`array index out of range`)
     }
     return arr[__i]
   }

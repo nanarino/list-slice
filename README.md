@@ -12,7 +12,7 @@ $ pnpm install list-slice
 ## Usage
 
 ```js
-import { getitem, setitem } from "list-slice"
+import { getitem, setitem, pop } from "list-slice"
 ```
 
 ### getitem
@@ -53,26 +53,12 @@ setitem(arr, [2,,], [7, 8, 9])
 console.log(arr) // [7, 8, 7, 8, 9]
 ```
 
-This is useful for changing vue `Reactive` list
 
-```vue
-<script setup>
-  import { reactive } from "vue"
-  import { setitem } from "list-slice"
-  const dataList = reactive([])
-  fetch('/dataList')
-    .then(res => res.json())
-    .then(data => setitem(dataList, [], data))
-</script>
+### pop
 
-<template>
-  <ul>
-    <li v-for="item in dataList" :key="item.id">
-      {{ item.name }}
-    </li>
-  </ul>
-</template>
-```
+- `pop(arr)`
+- `pop(arr, index)`
+
 
 ## Handling Errors
 
@@ -110,15 +96,14 @@ Coverage 100%
 ------------|---------|----------|---------|---------|-------------------
 File        | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
 ------------|---------|----------|---------|---------|-------------------
-All files   |     100 |      100 |     100 |     100 |
- error.ts   |     100 |      100 |     100 |     100 |
- getitem.ts |     100 |      100 |     100 |     100 |
- index.ts   |     100 |      100 |     100 |     100 |
- setitem.ts |     100 |      100 |     100 |     100 |
- slice.ts   |     100 |      100 |     100 |     100 |
+All files   |     100 |      100 |     100 |     100 | 
+ error.ts   |     100 |      100 |     100 |     100 | 
+ getitem.ts |     100 |      100 |     100 |     100 | 
+ index.ts   |     100 |      100 |     100 |     100 | 
+ pop.ts     |     100 |      100 |     100 |     100 | 
+ setitem.ts |     100 |      100 |     100 |     100 | 
+ slice.ts   |     100 |      100 |     100 |     100 | 
 ------------|---------|----------|---------|---------|-------------------
 Test Suites: 1 passed, 1 total
-Tests:       36 passed, 36 total
-Snapshots:   0 total
-Time:        3.102 s
+Tests:       46 passed, 46 total
 ```

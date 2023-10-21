@@ -51,7 +51,7 @@ function _setitem<T>(arr: T[], indices: ConstructorParameters<typeof slice> | Pa
         newItems = value
       } else {
         // TypeError: can only assign an iterable
-        throw new SliceTypeError(`can only assign a list`)
+        throw new SliceTypeError(`can only assign an array`)
       }
       arr.splice(__s.start, __i.length, ...newItems)
     }
@@ -60,13 +60,13 @@ function _setitem<T>(arr: T[], indices: ConstructorParameters<typeof slice> | Pa
     if (!Number.isInteger(indices)) {
       const indicesType = typeOf(indices)
       // TypeError: list indices must be integers or slices, not {*}
-      throw new SliceTypeError(`list indices must be integers or slices, not ${(indicesType === 'number') ? indices : indicesType}`)
+      throw new SliceTypeError(`array indices must be integers or slices, not ${(indicesType === 'number') ? indices : indicesType}`)
     }
     let __i = indices
     if (__i < 0) __i += arr.length
     if (__i < 0 || __i >= arr.length) {
       // IndexError: list index out of range
-      throw new SliceIndexError(`list index out of range`)
+      throw new SliceIndexError(`array index out of range`)
     }
     arr[__i] = value as T
   }

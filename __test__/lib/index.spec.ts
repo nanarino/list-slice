@@ -1,17 +1,17 @@
-import { getitem, setitem, slice } from "../../lib"
+import { getitem, setitem, slice, pop } from "../../lib"
 
 const arrPerhaps: unknown = '2345'
 const intPerhaps: unknown = '1'
 
 // getitem
-test('get slice apply not list', () => {
+test('get slice apply not array', () => {
   expect(() => getitem(arrPerhaps as number[], 0)).toThrow(`the 'getitem' for 'Array' objects doesn't apply to a 'string' object`)
 })
 test('get index ∉ int', () => {
-  expect(() => getitem([1, 2, 3, 4, 5], NaN)).toThrow('list indices must be integers or slices, not NaN')
+  expect(() => getitem([1, 2, 3, 4, 5], NaN)).toThrow('array indices must be integers or slices, not NaN')
 })
 test('get index ∉ number', () => {
-  expect(() => getitem([1, 2, 3, 4, 5], intPerhaps as number)).toThrow('list indices must be integers or slices, not string')
+  expect(() => getitem([1, 2, 3, 4, 5], intPerhaps as number)).toThrow('array indices must be integers or slices, not string')
 })
 test('get index 2', () => {
   expect(getitem([1, 2, 3, 4, 5], 2)).toBe(3)
@@ -20,7 +20,7 @@ test('get index -2', () => {
   expect(getitem([1, 2, 3, 4, 5], -2)).toBe(4)
 })
 test('get index ∉ range', () => {
-  expect(() => getitem([1, 2, 3, 4, 5], 500)).toThrow('list index out of range')
+  expect(() => getitem([1, 2, 3, 4, 5], 500)).toThrow('array index out of range')
 })
 test('get slice [::]', () => {
   expect(getitem([1, 2, 3, 4, 5], [null])).toEqual([1, 2, 3, 4, 5])
@@ -64,7 +64,7 @@ test('get slice [-1:1:0]', () => {
 
 
 // setitem
-test('set slice apply not list', () => {
+test('set slice apply not array', () => {
   expect(() => setitem(arrPerhaps as number[], 0, 1)).toThrow(`the 'setitem' requires a 'Array' object but received a 'string'`)
 })
 const arr = [2, 3, 4, 5]
@@ -73,19 +73,19 @@ const setItemAndBack = (slice: number | (number | undefined)[] | slice, newSlice
   return arr
 }
 test('set index ∉ int', () => {
-  expect(() => setItemAndBack(NaN, 1)).toThrow('list indices must be integers or slices, not NaN')
+  expect(() => setItemAndBack(NaN, 1)).toThrow('array indices must be integers or slices, not NaN')
 })
 test('set index ∉ number', () => {
-  expect(() => setItemAndBack(intPerhaps as number, 1)).toThrow('list indices must be integers or slices, not string')
+  expect(() => setItemAndBack(intPerhaps as number, 1)).toThrow('array indices must be integers or slices, not string')
 })
 test('set index 0 = 1', () => {
   expect(setItemAndBack(0, 1)).toEqual([1, 3, 4, 5])
 })
 test('set index < range', () => {
-  expect(() => setItemAndBack(-500, 1)).toThrow('list index out of range')
+  expect(() => setItemAndBack(-500, 1)).toThrow('array index out of range')
 })
 test('set index > range', () => {
-  expect(() => setItemAndBack(500, 1)).toThrow('list index out of range')
+  expect(() => setItemAndBack(500, 1)).toThrow('array index out of range')
 })
 test('set slice [:] = [...]', () => {
   expect(setItemAndBack([], [7, 8, 9])).toEqual([7, 8, 9])
@@ -103,7 +103,7 @@ test('set slice [-1:-1] = [...]', () => {
   expect(setItemAndBack([-1, -1], [1, 2, 3])).toEqual([1, 1, 2, 3, 9])
 })
 test('set slice [:] = val', () => {
-  expect(() => setItemAndBack([], 999)).toThrow('can only assign a list')
+  expect(() => setItemAndBack([], 999)).toThrow('can only assign an array')
 })
 test('set slice [::-1] = val', () => {
   expect(() => setItemAndBack([, , -1], 999)).toThrow('must assign Array to extended slice')
@@ -119,4 +119,36 @@ test('set slice [-1:-2:-1] = [...]', () => {
 })
 test('set slice [slice()] = [...]', () => {
   expect(setItemAndBack({ start: null, stop: null, step: null }, [2])).toEqual([2])
+})
+
+// pop
+test('pop apply not array', () => {
+  expect(() => pop(arrPerhaps as number[])).toThrow(`the 'pop' for 'Array' objects doesn't apply to a 'string' object`)
+})
+test('pop apply empty array', () => {
+  expect(() => pop([])).toThrow(`pop from empty array`)
+})
+test('pop index ∉ int', () => {
+  expect(() => pop([1, 2, 3], NaN)).toThrow(`NaN cannot be interpreted as an integer`)
+})
+test('pop index ∉ number', () => {
+  expect(() => pop([1, 2, 3], intPerhaps as number)).toThrow(`'string' object cannot be interpreted as an integer`)
+})
+test('pop index >= length', () => {
+  expect(() => pop([1, 2, 3], 3)).toThrow(`pop index out of array`)
+})
+test('pop index ∈ (0, length)', () => {
+  expect(pop([1, 2, 3], 2)).toEqual(3)
+})
+test('pop index < -length', () => {
+  expect(() => pop([1, 2, 3], -4)).toThrow(`pop index out of array`)
+})
+test('pop index ∈ [-length, 0)', () => {
+  expect(pop([1, 2, 3], -3)).toEqual(1)
+})
+test('pop index = 0', () => {
+  expect(pop([1, 2, 3], 0)).toEqual(1)
+})
+test('pop index = void 0', () => {
+  expect(pop([1, 2, 3], void 0)).toEqual(3)
 })
