@@ -59,6 +59,14 @@ console.log(arr) // [7, 8, 7, 8, 9]
 - `pop(arr)`
 - `pop(arr, index)`
 
+```js
+const arr = [1, 3, 4, 5]
+
+// python arr.pop(0)
+const first = pop(arr, 0)
+console.log(first, arr) // 1 [3, 4, 5]
+```
+
 
 ## Handling Errors
 
@@ -68,7 +76,7 @@ python-like error name:
 const a = getitem([1,2,3], 3)
           ^
 
-SliceIndexError [RangeError]: list index out of range
+SliceIndexError [RangeError]: array index out of range
     at file:///c:/Users/Administrator/Desktop/test.mjs:3:11
     at ModuleJob.run (internal/modules/esm/module_job.js:183:25)
     at async Loader.import (internal/modules/esm/loader.js:178:24)
@@ -105,5 +113,5 @@ All files   |     100 |      100 |     100 |     100 |
  slice.ts   |     100 |      100 |     100 |     100 | 
 ------------|---------|----------|---------|---------|-------------------
 Test Suites: 1 passed, 1 total
-Tests:       46 passed, 46 total
+Tests:       47 passed, 47 total
 ```

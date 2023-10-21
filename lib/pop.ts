@@ -1,7 +1,7 @@
 import { PopIndexError, PopTypeError } from './error'
 import typeOf from 'just-typeof'
 
-function _pop<T>(arr: T[], index?: number): T {
+function _pop<T>(arr: T[], index: number | null = -1): T {
   if (!Array.isArray(arr)) {
     // TypeError: descriptor 'pop' for 'list' objects doesn't apply to a '{*}' object
     throw new PopTypeError(`the 'pop' for 'Array' objects doesn't apply to a '${typeOf(arr)}' object`)
@@ -9,7 +9,7 @@ function _pop<T>(arr: T[], index?: number): T {
   const { length } = arr
   if (length) {
     index ??= length - 1
-    if (!Number.isInteger(index)){
+    if (!Number.isInteger(index)) {
       const indexType = typeOf(index)
       // TypeError: '{*}' object cannot be interpreted as an integer
       throw new PopTypeError(`${(indexType === 'number') ? index : `'${indexType}' object`} cannot be interpreted as an integer`)

@@ -122,6 +122,9 @@ test('set slice [slice()] = [...]', () => {
 })
 
 // pop
+test('pop default index', () => {
+  expect(pop([1, 2, 3])).toEqual(3)
+})
 test('pop apply not array', () => {
   expect(() => pop(arrPerhaps as number[])).toThrow(`the 'pop' for 'Array' objects doesn't apply to a 'string' object`)
 })
@@ -149,6 +152,6 @@ test('pop index ∈ [-length, 0)', () => {
 test('pop index = 0', () => {
   expect(pop([1, 2, 3], 0)).toEqual(1)
 })
-test('pop index = void 0', () => {
-  expect(pop([1, 2, 3], void 0)).toEqual(3)
+test('pop index = null', () => {
+  expect(pop([1, 2, 3], null as unknown as undefined)).toEqual(3)
 })
